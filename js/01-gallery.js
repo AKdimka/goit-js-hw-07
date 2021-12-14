@@ -1,24 +1,53 @@
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
 
-/* console.log(galleryItems);
+const container = document.querySelector(".gallery");
 
-const galleryContainer = document.querySelector('.gallery')
 
-galleryContainer.insertAdjacentHTML('afterbegin', createGalleryItem(galleryItems))
+const markupGallery = createGalleryMarkup(galleryItems);
 
-const createGalleryItem = (galleryItems) => {
-	return galleryItems.map(({ preview, original, description }) => {
+container.insertAdjacentHTML("beforeend", markupGallery);
 
-		return `<div class='gallery__item'>
-	<a class='gallery__link' href='${original}'>
-		<img
-			class='gallery__image'
-			src='${preview}'
-			data-source='${original}'
-			alt='${description}'
-		/>
-	</a>
-</div>`.join('')
-	})
-} */
+container.addEventListener('click', onContainerClick)
+
+
+function createGalleryMarkup(gallery) {
+	return gallery
+		.map(({ preview, original, description }) => {
+			return `
+        <div class="gallery__item">
+            <a class="gallery__link" href="large-image.jpg" onclick="event.preventDefault()">
+                <img
+                class="gallery__image"
+                src="${preview}"
+                data-source="${original}"
+                alt="${description}"
+                />
+            </a>
+        </div>`;
+		})
+		.join("");
+}
+
+
+function onContainerClick(event) {
+	if (!event.target.classList.contains("gallery__image")) {
+		return;
+	}
+	const instance = basicLightbox.create(`
+    <img src="${event.target.dataset.source}">
+    `
+	)
+	instance.show()
+
+	function onKeyboardEscAction(event) {
+		const ESC_KEY_CODE = 'Escape';
+		const isEscKey = event.code === ESC_KEY_CODE;
+		if (isEscKey) {
+			instance.close();
+		}
+
+	}
+
+	window.addEventListener("keydown", onKeyboardEscAction);
+
+}    
