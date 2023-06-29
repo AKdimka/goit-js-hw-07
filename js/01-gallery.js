@@ -1,5 +1,55 @@
 import { galleryItems } from './gallery-items.js';
 
+const galleryContainer = document.querySelector('.gallery');
+
+galleryContainer.addEventListener('click', onGalleryElClick)
+
+function onGalleryElClick(e) {
+	console.log(e.target.nodeName)
+}
+
+function markup() {
+	galleryItems.map(({ preview, original, description }) => {
+		return `<li class='gallery-item'>
+			<a href=${original}>
+				<img src=${preview} alt=${description} />
+			</a>
+		</li>`
+	}).join('')
+}
+
+
+galleryContainer.innerHTML = markup
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* import { galleryItems } from './gallery-items.js';
+
 const container = document.querySelector(".gallery");
 const markupGallery = createGalleryMarkup(galleryItems);
 
@@ -43,4 +93,4 @@ function onContainerClick(event) {
 	}
 
 	window.addEventListener("keydown", onKeyboardEscAction);
-}
+} */
