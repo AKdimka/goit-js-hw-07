@@ -5,29 +5,25 @@ const galleryContainer = document.querySelector('.gallery');
 galleryContainer.addEventListener('click', onGalleryElClick)
 
 function onGalleryElClick(e) {
+	if (e.target.nodeName !== 'IMG') {
+		return
+	}
 	console.log(e.target.nodeName)
 }
 
-function markup() {
-	galleryItems.map(({ preview, original, description }) => {
-		return `<li class='gallery-item'>
-			<a href=${original}>
-				<img src=${preview} alt=${description} />
+function markupCreate(items) {
+	return items.map(({ preview, original, description }) => {
+		return `<li class='gallery__item'>
+			<a class='gallery__link' href=${original} onclick='event.preventDefault()'>
+				<img class='gallery__image' src=${preview} alt=${description} />
 			</a>
 		</li>`
 	}).join('')
 }
 
 
-galleryContainer.innerHTML = markup
 
-
-
-
-
-
-
-
+galleryContainer.innerHTML = markupCreate(galleryItems)
 
 
 
